@@ -7,6 +7,8 @@ from vision.ssd.squeezenet_ssd_lite import create_squeezenet_ssd_lite, create_sq
 from vision.datasets.open_images import OpenImagesDataset
 from vision.utils import box_utils, measurements
 from vision.utils.misc import str2bool, Timer
+from vision.datasets.track_and_trail_dataset import track_and_trail_Dataset
+
 import argparse
 import pathlib
 import numpy as np
@@ -127,6 +129,8 @@ if __name__ == '__main__':
 
     if args.dataset_type == "voc":
         dataset = VOCDataset(args.dataset, is_test=True)
+    elif args.dataset_type == "track_and_trail":
+        dataset = track_and_trail_Dataset(args.dataset, is_test=True)
     elif args.dataset_type == 'open_images':
         dataset = OpenImagesDataset(args.dataset, dataset_type="test")
 
@@ -190,10 +194,10 @@ if __name__ == '__main__':
             for i in range(sub.size(0)):
                 prob_box = sub[i, 2:].numpy()
                 image_id = dataset.ids[int(sub[i, 0])]
-                print(
-                    image_id + " " + " ".join([str(v) for v in prob_box]),
-                    file=f
-                )
+                # print(
+                #     image_id + " " + " ".join([str(v) for v in prob_box]),
+                #     file=f
+                # )
     aps = []
     print("\n\nAverage Precision Per-class:")
     for class_index, class_name in enumerate(class_names):
