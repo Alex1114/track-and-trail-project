@@ -22,5 +22,24 @@
     <param name="bridge_to" value="/teleop/image/compressed" />
   </node>
 
+  <node pkg="bridge" type="bridge.py" name="bridge_odom_to_pc" args="$(arg wlan0)" output="screen">
+    <param name="bridge_type" value="Odometry" />
+    <param name="bridge_from" value="/odom" />
+    <param name="bridge_to" value="/teleop/odom" />
+  </node>
+
+  <node pkg="bridge" type="bridge.py" name="bridge_map_to_pc" args="$(arg wlan0)" output="screen">
+    <param name="bridge_type" value="OccupancyGrid" />
+    <param name="bridge_from" value="/depthcam_map" />
+    <param name="bridge_to" value="/teleop/map" />
+  </node>
+
+  <node pkg="bridge" type="bridge.py" name="bridge_tf_to_pc" args="$(arg wlan0)" output="screen">
+    <param name="bridge_type" value="TFMessage" />
+    <param name="bridge_from" value="/tf" />
+    <param name="bridge_to" value="/tf" />
+  </node>
+  
+
 
 </launch>

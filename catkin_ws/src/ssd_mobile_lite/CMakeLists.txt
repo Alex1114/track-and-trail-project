@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  subt_msgs
+  cv_bridge
 )
 
 ## System dependencies are found with CMake's conventions
@@ -197,3 +199,8 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+add_executable(pub_arti_pose_ssd src/pub_arti_pose_ssd.h src/pub_arti_pose_ssd.cpp)
+target_link_libraries(pub_arti_pose_ssd ${catkin_LIBRARIES})
+add_dependencies(pub_arti_pose_ssd src/pub_arti_pose_ssd.cpp ${catkin_EXPORTED_TARGETS})

@@ -32,11 +32,11 @@ class bb_ssd_mobile_lite(object):
 		model = "v1"
 		r = rospkg.RosPack()
 		path = r.get_path('ssd_mobile_lite')
-		model_name = "Epoch-740-Loss-0.8609.pth"
+		model_name = "Epoch-630-Loss-0.4744.pth"
 		self.prob_threshold = 0.5
 		self.cv_bridge = CvBridge() 
 
-		self.labels = ['BACKGROUND', 'husky']
+		self.labels = ['BACKGROUND', 'backpack']
 		if model == "v2_lite":
 			self.network = create_mobilenetv2_ssd_lite(len(self.labels), is_test=True) 
 		elif model == "v1":
@@ -78,9 +78,11 @@ class bb_ssd_mobile_lite(object):
 		(rows, cols, channels) = cv_image.shape
 		self.width = cols
 		self.height = rows
+                #obj_list = []
 		predict_img, obj_list = self.predict(cv_image)
 		try:
 			self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(predict_img, "bgr8"))
+			#self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(cv_image, "bgr8"))
 		except CvBridgeError as e:
 			print(e)
 
@@ -114,7 +116,7 @@ class bb_ssd_mobile_lite(object):
 			bbox_out.header = rgb_data.header
 			bbox_out.depth = depth_data
 			bbox_out.count = len(obj_list)
-			bbox_out.camera = "camera_middle"
+			bbox_out.camera = "camera"
 			self.BoundingBoxes_pub.publish(bbox_out)
 
 	def predict(self, img):

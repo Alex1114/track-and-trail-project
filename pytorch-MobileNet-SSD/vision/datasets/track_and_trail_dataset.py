@@ -44,7 +44,7 @@ class track_and_trail_Dataset:
 
         else:
             logging.info("No labels file, using default VOC classes.")
-            self.class_names = ('BACKGROUND', 'husky')
+            self.class_names = ('BACKGROUND', 'backpack_bb')
 
 
         self.class_dict = {class_name: i for i, class_name in enumerate(self.class_names)}
